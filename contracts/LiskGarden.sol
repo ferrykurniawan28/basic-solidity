@@ -74,7 +74,7 @@ contract LiskGarden {
     }
 
     function calculateWaterLevel(uint256 plantId) public view returns (uint8) {
-       Plant memory _plants = plants[plantId];
+       Plant storage _plants = plants[plantId];
 
         if (!_plants.exist || _plants.isDead){
             return 0;
@@ -91,7 +91,7 @@ contract LiskGarden {
     }
 
     function updateWaterLevel(uint256 plantId) internal {
-        Plant memory _plant = plants[plantId];
+        Plant storage _plant = plants[plantId];
 
         uint256 currentWater = calculateWaterLevel(_plant.id);
 
@@ -105,7 +105,7 @@ contract LiskGarden {
     }
 
     function waterPlant(uint256 plantId) external {
-        Plant memory _plant = plants[plantId];
+        Plant storage _plant = plants[plantId];
         
         require(_plant.exist, "Plant not Exist");
         require(_plant.owner == msg.sender, "You are not the owner");
@@ -121,7 +121,7 @@ contract LiskGarden {
     }
 
     function updatePlantStage(uint256 plantId) public {
-        Plant memory _plant = plants[plantId];
+        Plant storage _plant = plants[plantId];
 
         require(_plant.exist, "Plant not Exist");
 
@@ -148,7 +148,7 @@ contract LiskGarden {
     }
 
     function harvestPlant(uint256 plantId) external {
-        Plant memory _plant = plants[plantId];
+        Plant storage _plant = plants[plantId];
         require(_plant.exist, "Plant not Exist");
         require(_plant.stage == GrowthStage.BLOOMING, "Plant not ready to harvest");
         require(_plant.owner == msg.sender, "Only the owner can harvest");
